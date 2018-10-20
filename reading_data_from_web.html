@@ -363,6 +363,44 @@ drug_use_xml = read_html(url)</code></pre>
   .[[1]] %&gt;%
   html_table(header = TRUE)</code></pre>
 </div>
+<div id="harry-potter" class="section level3">
+<h3>Harry Potter</h3>
+<p>Let’s get some Potter data!</p>
+<pre class="r"><code>hpsaga_html = read_html(&quot;https://www.imdb.com/list/ls000630791/&quot;) 
+
+titles = hpsaga_html %&gt;% 
+  html_nodes(css = &quot;.lister-item-header a&quot;) %&gt;% 
+  html_text()
+
+money = hpsaga_html %&gt;% 
+  html_nodes(css = &quot;.text-small:nth-child(7) span:nth-child(5)&quot;) %&gt;% 
+  html_text()
+
+hpsaga_df = tibble(
+  title = titles, 
+  gross_rev = money
+)</code></pre>
+<p>Napoleon Dynamite Learning Assessment:</p>
+<pre class="r"><code>napoleon_html = read_html(&quot;https://www.amazon.com/product-reviews/B00005JNBQ/ref=cm_cr_arp_d_viewopt_rvwer?ie=UTF8&amp;reviewerType=avp_only_reviews&amp;sortBy=recent&amp;pageNumber=1&quot;)
+
+review_titles = napoleon_html %&gt;% 
+  html_nodes(css = &quot;#cm_cr-review_list .a-color-base&quot;) %&gt;% 
+  html_text()
+
+review_stars = napoleon_html %&gt;% 
+  html_nodes(css = &quot;#cm_cr-review_list .review-rating&quot;) %&gt;% 
+  html_text()
+
+review_text = napoleon_html %&gt;% 
+  html_nodes(css = &quot;.review-text&quot;) %&gt;% 
+  html_text()
+
+reviews = tibble(
+  title = review_titles,
+  stars = review_stars,
+  text = review_text
+)</code></pre>
+</div>
 
 
 

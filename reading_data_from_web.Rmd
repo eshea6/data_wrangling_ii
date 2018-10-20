@@ -54,5 +54,50 @@ nyc_cost = read_html("https://www.bestplaces.net/cost_of_living/city/new_york/ne
   html_table(header = TRUE)
 ```
 
+### Harry Potter
+
+Let's get some Potter data!
+
+```{r}
+hpsaga_html = read_html("https://www.imdb.com/list/ls000630791/") 
+
+titles = hpsaga_html %>% 
+  html_nodes(css = ".lister-item-header a") %>% 
+  html_text()
+
+money = hpsaga_html %>% 
+  html_nodes(css = ".text-small:nth-child(7) span:nth-child(5)") %>% 
+  html_text()
+
+hpsaga_df = tibble(
+  title = titles, 
+  gross_rev = money
+)
+``` 
+
+Napoleon Dynamite Learning Assessment:
+
+```{r}
+napoleon_html = read_html("https://www.amazon.com/product-reviews/B00005JNBQ/ref=cm_cr_arp_d_viewopt_rvwer?ie=UTF8&reviewerType=avp_only_reviews&sortBy=recent&pageNumber=1")
+
+review_titles = napoleon_html %>% 
+  html_nodes(css = "#cm_cr-review_list .a-color-base") %>% 
+  html_text()
+
+review_stars = napoleon_html %>% 
+  html_nodes(css = "#cm_cr-review_list .review-rating") %>% 
+  html_text()
+
+review_text = napoleon_html %>% 
+  html_nodes(css = ".review-text") %>% 
+  html_text()
+
+reviews = tibble(
+  title = review_titles,
+  stars = review_stars,
+  text = review_text
+)
+```
+
 
 
