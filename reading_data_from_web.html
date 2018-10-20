@@ -401,6 +401,42 @@ reviews = tibble(
   text = review_text
 )</code></pre>
 </div>
+<div id="using-an-api" class="section level3">
+<h3>Using an API</h3>
+<p>Get the water data</p>
+<pre class="r"><code>nyc_water = GET(&quot;https://data.cityofnewyork.us/resource/waf7-5gvc.csv&quot;) %&gt;% 
+  content(&quot;parsed&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   new_york_city_population = col_double(),
+##   nyc_consumption_million_gallons_per_day = col_double(),
+##   per_capita_gallons_per_person_per_day = col_integer(),
+##   year = col_integer()
+## )</code></pre>
+<p>As JSON</p>
+<pre class="r"><code>nyc_water = GET(&quot;https://data.cityofnewyork.us/resource/waf7-5gvc.json&quot;) %&gt;% 
+  content(&quot;text&quot;) %&gt;%
+  jsonlite::fromJSON() %&gt;%
+  as_tibble()</code></pre>
+<p>BRFSS</p>
+<pre class="r"><code>brfss_smart2010 = 
+  GET(&quot;https://data.cdc.gov/api/views/acme-vg9e/rows.csv?accessType=DOWNLOAD&quot;) %&gt;% 
+  content(&quot;parsed&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_character(),
+##   Year = col_integer(),
+##   Sample_Size = col_integer(),
+##   Data_value = col_double(),
+##   Confidence_limit_Low = col_double(),
+##   Confidence_limit_High = col_double(),
+##   Display_order = col_integer()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<p>Where it gets complicated (and you need to use JSON):</p>
+<pre class="r"><code>poke = GET(&quot;http://pokeapi.co/api/v2/pokemon/1&quot;) %&gt;%
+  content()</code></pre>
+</div>
 
 
 
